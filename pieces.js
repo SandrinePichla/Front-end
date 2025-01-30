@@ -56,3 +56,15 @@ boutonFiltrer.addEventListener("click", function () {
    console.log(piecesFiltrees)
 });
 
+const btnTri = document.querySelector(".btnTri")
+btnTri.addEventListener("click", ()=>{
+    bntTri.sort(function (a,b){
+        return - (a.prix - b.prix)
+    }
+               )}
+const btnTri = document.querySelector(".btnFil")
+btnTri.addEventListener("click", ()=>{
+    bntTri.sort(function (piece){
+        return  piece.decrispition ? "${piece.description"
+    }
+               )}
