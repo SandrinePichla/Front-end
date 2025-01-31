@@ -91,3 +91,21 @@ for(let i=0; i < noms.length ; i++){
 // Ajout de l'en-tête puis de la liste au bloc résultats filtres
 document.querySelector('.abordables')
     .appendChild(abordablesElements)
+
+const disponible = pieces.map(piece => ("${piece.description} -- ${piece.prix});
+for(let i = pieces.length -1 ; i >= 0; i--){
+    if(!pieces[i].disponible){
+        disponible.splice(i,1);
+    }
+}
+
+const disponibleElement = document.createElement('ul');
+//Ajout de chaque nom à la liste
+for(let i=0; i < noms.length ; i++){
+    const available = document.createElement('li');
+    available.innerText = disponible[i];
+    disponibleElement.appendChild(available)
+}
+// Ajout de l'en-tête puis de la liste au bloc résultats filtres
+document.querySelector('.disponible')
+    .appendChild(disponibleElement)
