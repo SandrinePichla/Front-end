@@ -1,48 +1,36 @@
-// Pour que l’ajout de la fonction  ajoutListenersAvis ne génère pas d’erreur, nous devons l’importer avant de l’utiliser. Cet import doit être réalisé à la première ligne du fichier :
-// importer la fonction de avis.js : 
-
-import { ajoutListenersAvis } from "./avis.js";
-
-
 // Récupération des pièces depuis le fichier JSON fetch = récuperer
 const reponse = await fetch('pieces-autos.json');
 const pieces = await reponse.json();
 
-function genererPieces(pieces){
-    for (let i = 0; i < pieces.length; i++) {
+for (let i = 0; i < pieces.length; i++) {
 
-        const article = pieces[i];
+    const article = pieces[i];
 
-        // Récupération de l'élément du DOM qui accueillera les fiches
-        const sectionFiches = document.querySelector(".fiches");
-        
-        // Création d’une balise dédiée à une pièce automobile
-        const pieceElement = document.createElement("article");
-        
-        // Création des balises 
-        const imageElement = document.createElement("img");
-        imageElement.src = article.image;
+    // Récupération de l'élément du DOM qui accueillera les fiches
+    const sectionFiches = document.querySelector(".fiches");
+    
+    // Création d’une balise dédiée à une pièce automobile
+    const pieceElement = document.createElement("article");
+    
+    // Création des balises 
+    const imageElement = document.createElement("img");
+    imageElement.src = article.image;
 
-        const nomElement = document.createElement("h2");
-        nomElement.innerText = article.nom;
+    const nomElement = document.createElement("h2");
+    nomElement.innerText = article.nom;
 
-        const prixElement = document.createElement("p");
-        prixElement.innerText = `Prix: ${article.prix} € (${article.prix < 35 ? "€" : "€€€"})`;
+    const prixElement = document.createElement("p");
+    prixElement.innerText = `Prix: ${article.prix} € (${article.prix < 35 ? "€" : "€€€"})`;
 
-        const categorieElement = document.createElement("p");
-        categorieElement.innerText = article.categorie ?? "(aucune catégorie)";
+    const categorieElement = document.createElement("p");
+    categorieElement.innerText = article.categorie ?? "(aucune catégorie)";
 
-        const descriptionElement = document.createElement("p");
-        descriptionElement.innerText = article.description ?? "Pas de description pour le moment.";
+    const descriptionElement = document.createElement("p");
+    descriptionElement.innerText = article.description ?? "Pas de description pour le moment.";
 
-        const stockElement = document.createElement("p");
-        stockElement.innerText = article.disponibilite ? "En stock" : "Rupture de stock";
-
-        /* BOUTON AVIS */
-        const avisBouton = document.createElement("button");
-        avisBouton.dataset.id = article.id;
-        avisBouton.textContent = "Afficher les avis";
-       
+    const stockElement = document.createElement("p");
+    stockElement.innerText = article.disponibilite ? "En stock" : "Rupture de stock";
+    
     // On rattache la balise article a la section Fiches
     sectionFiches.appendChild(pieceElement);
 
@@ -54,18 +42,8 @@ function genererPieces(pieces){
     //Ajout des éléments au DOM pour l'exercice
     pieceElement.appendChild(descriptionElement);
     pieceElement.appendChild(stockElement);
-   
-    //Ajout BOUTON AVIS
-    pieceElement.appendChild(avisBouton);
  }
- // Ajout de la fonction ajoutListenersAvis
- ajoutListenersAvis();
- 
-}
 
-genererPieces(pieces);
-
-/* GESTION DES BOUTONS */
  /*  listener au bouton “Trier par prix croissants” puis trier avec sort */
  const boutonTrier = document.querySelector(".btn-trier");
 
@@ -76,8 +54,7 @@ genererPieces(pieces);
     piecesOrdonnees.sort(function (a, b) {
         return a.prix - b.prix;
     });
-    document.querySelector(".fiches").innerHTML = "";
-    genererPieces(piecesOrdonnees);
+    console.log(piecesOrdonnees);
  });
 
  /*  listener au bouton “Filtrer les pièces non abordables” puis filtrer avec filter */
@@ -87,8 +64,7 @@ genererPieces(pieces);
     const piecesFiltrees = pieces.filter(function (pieces) {
         return pieces.prix <= 35;
     });
-    document.querySelector(".fiches").innerHTML = "";
-    genererPieces(piecesFiltrees);
+    console.log(piecesFiltrees);
 });
 
  /*  listener au bouton “décroissant” puis trier avec sort */
@@ -100,8 +76,7 @@ genererPieces(pieces);
      piecesOrdonnees.sort(function (a, b) {
          return  b.prix - a.prix;
      });
-     document.querySelector(".fiches").innerHTML = "";
-     genererPieces(piecesOrdonnees);
+     console.log(piecesOrdonnees);
  })
  
 /*  listener au bouton “description” puis filtrer avec filter */
@@ -111,8 +86,7 @@ boutonNoDescription.addEventListener("click", function () {
     const piecesFiltrees = pieces.filter(function (pieces) {
         return pieces.description
     });
-    document.querySelector(".fiches").innerHTML = "";
-    genererPieces(piecesFiltrees);
+    console.log(piecesFiltrees);
 });
 
 /* MAPER => Generer la liste des pièces */
@@ -124,10 +98,6 @@ for (let i = pieces.length -1 ; i >= 0; i--){
     }        
 } console.log(noms) 
 
-/* CREATION DE L'EN-TETE */
-const pElement = document.createElement('p')
-pElement.innerText = "Pièces abordables";
-
 /* créer la liste  PIECES ABORDABLES*/
 const abordablesElements = document.createElement('ul');
 /* ajout de chaque nom à la liste */
@@ -137,9 +107,7 @@ for(let i = 0; i < noms.length; i++ ) {
     abordablesElements.appendChild(nomElement)
 }
 /* raccrocher cette liste au parent */
-document.querySelector(".abordables")
-.appendChild(pElement)
-.appendChild(abordablesElements)
+document.querySelector(".abordables").appendChild(abordablesElements)
 
 /* Generer la liste des pièces  PIECES DISPONIBLES*/
 const nomsDisponibles = pieces.map(pieces => pieces.nom)
@@ -151,11 +119,10 @@ for (let i = pieces.length -1; i >= 0; i--) {
         nomsDisponibles.splice(i,1)
         prixDisponibles.splice(i,1)        
     }      
-} 
+} console.log(noms)
 
 /* créer la liste ul */
 const disponiblesElements = document.createElement('ul');
-
 /* ajout de chaque nom à la liste */
 for(let i = 0; i < nomsDisponibles.length; i++ ) {
     const nomPrixElement = document.createElement('li');
@@ -163,25 +130,33 @@ for(let i = 0; i < nomsDisponibles.length; i++ ) {
 /* raccrocher cette liste au parent */
     disponiblesElements.appendChild(nomPrixElement);    
 } 
+document.querySelector(".disponibles").appendChild(disponiblesElements)
 
-const pElementDisponible = document.createElement('p')
-pElementDisponible.innerText = "Pièces disponibles:";
-document.querySelector('.disponibles').appendChild(pElementDisponible).appendChild(disponiblesElements)
 
-/*EXERCICE : ajoutez une balise input de type range dans la page web, représentant le prix maximum pour filtrer les pièces : 
-valeur min : 0
-valeur max : 60
-step: 5.*/
+/* PROPRIETE innerHTML CREER DU CODE HTML*/
+document.body.innerHTML = '<article>'
+    + '<img src="' + piece.image + '" />'
+    + '<h2>' + piece.nom + '</h2>'
+    // ...
+    + '</article>'
 
-/* CREATION DE L'EN-TETE */
-const inputPrixMax = document.querySelector('#prix-max')
-inputPrixMax.addEventListener('input', function(){
-    const piecesFiltrees = pieces.filter(function (pieces) {
-        return pieces.prix <= inputPrixMax.value;
-    });
-    document.querySelector(".fiches").innerHTML = "";
-    genererPieces(piecesFiltrees);
-})
+    /* PROPRIETE innerHTML EFFACER LE CONTENU D'UNE BALISE ET DE LA PAGE WEB*/ 
+    document.querySelector(".fiches").innerHTML = '';
+	
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
 
 
