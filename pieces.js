@@ -1,12 +1,14 @@
 // Pour que l’ajout de la fonction  ajoutListenersAvis ne génère pas d’erreur, nous devons l’importer avant de l’utiliser. Cet import doit être réalisé à la première ligne du fichier :
 // importer la fonction de avis.js : 
 
-import { ajoutListenersAvis } from "./avis.js";
+import { ajoutListenersAvis, ajoutListenersEnvoyerAvis } from "./avis.js";
 
 
 // Récupération des pièces depuis le fichier JSON fetch = récuperer
-const reponse = await fetch('pieces-autos.json');
+const reponse = await fetch('http://localhost:8081/pieces/');
 const pieces = await reponse.json();
+// On appelle la fonction pour ajouter le listner au formulaire
+ajoutListenersEnvoyerAvis()
 
 function genererPieces(pieces){
     for (let i = 0; i < pieces.length; i++) {
